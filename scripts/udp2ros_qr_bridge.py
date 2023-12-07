@@ -46,6 +46,7 @@ class udp2rosBridge:
         self.idle_activation = False
 
 
+    ''' TIMER FUNCTIONS '''
     def timer_create_and_start(self):
         self.timer = Timer(self.idle_delay, self.timer_callback)
         # print('Timer created')
@@ -67,12 +68,14 @@ class udp2rosBridge:
         self.timer_create_and_start()
         
 
+    ''' ROS ACTIVATION FUNCTION '''
     def activation_callback(self, msg):
         print("Received message: ", msg.data)
         self.idle_activation = True
         print("idle_activation set to: ", msg.data)
 
 
+    ''' THREAD FUNCTIONS '''
     def thread_stop(self):
         print('thread_stop Called')
         self.thread_stop_event.set()
@@ -85,6 +88,7 @@ class udp2rosBridge:
         return self.thread_stop_event.is_set()
 
 
+    ''' UDP THREAD LOOPING LOGIC '''
     def socket_reading_loop(self):
         print('===== Started socket_reading_loop =====')
         while not self.thread_stopped():
